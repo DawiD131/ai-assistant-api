@@ -1,0 +1,33 @@
+### Register
+POST {{domain}}/auth/register HTTP/1.1
+Content-Type: application/json
+Cookie: key=first-value
+
+{
+  "email": "test12@gmail.com",
+  "password": "password",
+  "firstName": "test-name",
+  "lastName": "test-lastname"
+}
+
+### Login
+POST {{domain}}/auth/login HTTP/1.1
+Content-Type: application/json
+Cookie: key=first-value
+
+{
+  "email": "test12@gmail.com",
+  "password": "password"
+}
+
+
+### Refresh
+POST {{domain}}/auth/refresh HTTP/1.1
+Content-Type: application/json
+Cookie: key=first-value
+
+
+### Logout
+GET {{domain}}/auth/logout
+
+

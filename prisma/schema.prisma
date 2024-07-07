@@ -5,8 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "linux-arm64-openssl-3.0.x"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -20,5 +19,5 @@ model User {
   firstName    String
   lastName     String
   password     String
-  currentToken String?
+  refreshToken String?
 }
