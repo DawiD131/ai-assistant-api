@@ -1,10 +1,24 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
+import { PrismaService } from './prisma.service';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
+  const prismaService = app.get(PrismaService);
+  const cacheManager = app.get<Cache>(CACHE_MANAGER);
+  const configService = app.get(ConfigService);
+
+  app.use((req, res, next) => {
+    req.prisma = prismaService;
+    req.cacheManager = cacheManager;
+    req.configService = configService;
+    next();
+  });
+
   await app.listen(3000);
 }
 bootstrap();

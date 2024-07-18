@@ -1,0 +1,8 @@
+### Entry query
+PUT {{domain}}/user-settings HTTP/1.1
+Content-Type: application/json
+Cookie: key=first-value
+
+{
+  "openAiApiKey": "hello1234567812"
+}

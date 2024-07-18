@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { SaveSettingsDto } from './dto/save-settings.dto';
-import { createHmac } from 'crypto';
+import { createCipheriv } from 'crypto';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -25,11 +25,15 @@ export class UserSettingsService {
   }
 
   private encryptObjectValues(object: unknown): { [p: string]: string } {
-    const hmac = createHmac('sha512', this.configService.get('ENCRYPT_SECRET'));
-
     const encrypt = (value: string) => {
-      hmac.update(value);
-      return hmac.digest('hex');
+      const cipher = createCipheriv(
+        'aes-256-cbc',
+        this.configService.get('ENCRYPT_SECRET'),
+        this.configService.get('ENCRYPT_INITIAL_VECTOR'),
+      );
+      let encrypted = cipher.update(value, 'utf8', 'hex');
+      encrypted += cipher.final('hex');
+      return encrypted;
     };
 
     return Object.fromEntries(
