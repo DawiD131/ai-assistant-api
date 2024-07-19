@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../services/prisma.service';
 import { Cache } from 'cache-manager';
 import { createDecipheriv } from 'crypto';
 

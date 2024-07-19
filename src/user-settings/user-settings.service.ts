@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../services/prisma.service';
 import { SaveSettingsDto } from './dto/save-settings.dto';
 import { createCipheriv } from 'crypto';
 import { ConfigService } from '@nestjs/config';
