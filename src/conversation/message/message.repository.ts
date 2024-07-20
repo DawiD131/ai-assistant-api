@@ -11,6 +11,7 @@ export class MessageRepository {
       data: {
         role: message.role,
         content: message.content,
+        conversationId: message.conversationId,
       },
     });
   }

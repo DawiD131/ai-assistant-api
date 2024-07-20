@@ -3,7 +3,7 @@ import { PrismaService } from '../services/prisma.service';
 import { Cache } from 'cache-manager';
 import { createDecipheriv } from 'crypto';
 
-export const UserObj = createParamDecorator(
+export const GetUserSettings = createParamDecorator(
   async (_, context: ExecutionContext) => {
     const request = context.switchToHttp().getRequest();
     const user = request.user;
@@ -38,7 +38,7 @@ export const UserObj = createParamDecorator(
       });
       await cache.set(cacheKey, settings, 0);
     }
-
+    console.log(user);
     return { ...user, openAiApiKey: decrypt(settings.openAiApiKey) };
   },
 );

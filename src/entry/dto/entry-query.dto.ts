@@ -1,4 +1,7 @@
+import { MessageRole } from '../../conversation/message/models/MessageRole';
+
 export class EntryQueryDto {
-  query: string;
+  content: string;
+  role: MessageRole;
   conversationId?: string;
 }

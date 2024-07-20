@@ -36,9 +36,10 @@ model UserSettings {
 }
 
 model Conversation {
-  id       String    @id @default(uuid())
-  name     String
-  messages Message[]
+  id        String    @id @default(uuid())
+  name      String?
+  messages  Message[]
+  createdAt DateTime  @default(now())
 }
 
 model Message {
@@ -47,5 +48,5 @@ model Message {
   content        String
   conversation   Conversation? @relation(fields: [conversationId], references: [id])
   createdAt      DateTime      @default(now())
-  conversationId String?
+  conversationId String
 }
