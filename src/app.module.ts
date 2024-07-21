@@ -6,6 +6,8 @@ import { UserSettingsModule } from './user-settings/user-settings.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { OpenaiService } from './open-ai/openai.service';
 import { ConversationModule } from './conversation/conversation.module';
+import { ActionProcessorModule } from './action-processor/action-processor.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -14,10 +16,12 @@ import { ConversationModule } from './conversation/conversation.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
+    EventEmitterModule.forRoot(),
     EntryModule,
     UserSettingsModule,
     CacheModule.register(),
     ConversationModule,
+    ActionProcessorModule,
   ],
   providers: [OpenaiService],
 })

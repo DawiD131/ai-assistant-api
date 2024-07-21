@@ -5,6 +5,8 @@ import { PrismaService } from '../services/prisma.service';
 import { OpenaiService } from '../open-ai/openai.service';
 import { MessageRepository } from '../conversation/message/message.repository';
 import { ConversationRepository } from '../conversation/conversation/conversation.repository';
+import { ActionProcessorModule } from '../action-processor/action-processor.module';
+import { ActionProcessorService } from '../action-processor/action-processor.service';
 
 @Module({
   controllers: [EntryController],
@@ -14,6 +16,7 @@ import { ConversationRepository } from '../conversation/conversation/conversatio
     OpenaiService,
     MessageRepository,
     ConversationRepository,
+    ActionProcessorService,
   ],
 })
 export class EntryModule {}
