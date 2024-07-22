@@ -16,6 +16,9 @@ jobs:
       - name: install dependencies
         run:  npx pnpm install
 
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
       - name: run build
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -26,12 +29,8 @@ jobs:
           JWT_REFRESH_EXPIRES_IN: ${{ secrets.JWT_REFRESH_EXPIRES_IN }}
           JWT_REFRESH_SECRET: ${{ secrets.JWT_REFRESH_SECRET }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-
         run: |
           npx pnpm run build
-
-      - name: Generate Prisma Client
-        run: npx prisma generate
 
       - name: Run database migrations
         env:
@@ -48,5 +47,5 @@ jobs:
           JWT_REFRESH_EXPIRES_IN: ${{ secrets.JWT_REFRESH_EXPIRES_IN }}
           JWT_REFRESH_SECRET: ${{ secrets.JWT_REFRESH_SECRET }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-        run:   npx pnpm run start:prod
+        run: npx pnpm run start:prod
 
