@@ -5,10 +5,10 @@ import { PrismaService } from '../services/prisma.service';
 import { OpenaiService } from '../open-ai/openai.service';
 import { MessageRepository } from '../conversation/message/message.repository';
 import { ConversationRepository } from '../conversation/conversation/conversation.repository';
-import { ActionProcessorModule } from '../action-processor/action-processor.module';
-import { ActionProcessorService } from '../action-processor/action-processor.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Module({
+  imports: [EventEmitter2],
   controllers: [EntryController],
   providers: [
     EntryService,
@@ -16,7 +16,6 @@ import { ActionProcessorService } from '../action-processor/action-processor.ser
     OpenaiService,
     MessageRepository,
     ConversationRepository,
-    ActionProcessorService,
   ],
 })
 export class EntryModule {}

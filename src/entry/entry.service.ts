@@ -21,9 +21,9 @@ export class EntryService {
     const { content } = await this.recognizeIntention(query, apiKey);
 
     if (content === 'action') {
-      this.eventEmitter.emit('entry.action', query);
+      this.eventEmitter.emit('entry.action', { query, apiKey });
     } else {
-      this.eventEmitter.emit('entry.query', query);
+      this.eventEmitter.emit('entry.query', { query, apiKey });
     }
   }
 
