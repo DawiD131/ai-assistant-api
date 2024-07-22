@@ -29,8 +29,6 @@ jobs:
 
         run: |
           npx pnpm run build
-          npx pnpm run start:prod
-
 
       - name: Generate Prisma Client
         run: npx prisma generate
