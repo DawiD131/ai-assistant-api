@@ -27,6 +27,20 @@ export class EntryService {
     }
   }
 
+  async saveAnswer({
+    answer,
+    conversationId,
+  }: {
+    answer: string;
+    conversationId: string;
+  }) {
+    await this.messageRepository.save({
+      role: 'assistant',
+      conversationId: conversationId,
+      content: answer,
+    });
+  }
+
   private async initializeConversation(query: EntryQueryDto) {
     if (!query.conversationId) {
       const { id } = await this.conversationRepository.upsert({

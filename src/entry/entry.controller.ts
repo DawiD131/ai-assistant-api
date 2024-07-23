@@ -21,6 +21,11 @@ export class EntryController {
     @Res() res: Response,
   ) {
     this.eventEmitter.waitFor('entry.answer').then(async (data) => {
+      await this.entryService.saveAnswer({
+        conversationId: query.conversationId,
+        answer: data[0],
+      });
+
       res.json({
         answer: data[0],
       });
