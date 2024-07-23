@@ -36,7 +36,7 @@ jobs:
       - name: Run database migrations
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: npx prisma migrate deploy
+        run: npx prisma migrate deploy --force
 
       - name: Launch app
         env:
