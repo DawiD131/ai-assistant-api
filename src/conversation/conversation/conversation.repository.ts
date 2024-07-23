@@ -10,13 +10,14 @@ interface ConversationPayload {
 export class ConversationRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async upsert(conversation: ConversationPayload) {
+  async upsert(conversation: ConversationPayload, userId: string) {
     const { name } = conversation;
     return this.prismaService.conversation.upsert({
       where: { id: conversation.id ?? '' },
       update: {},
       create: {
         name: name,
+        userId,
       },
     });
   }
@@ -39,6 +40,28 @@ export class ConversationRepository {
       },
       data: {
         ...conversation,
+      },
+    });
+  }
+
+  async getById(id: string) {
+    return this.prismaService.conversation.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        messages: true,
+      },
+    });
+  }
+
+  async getAllByUserId(userId: string) {
+    return this.prismaService.conversation.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        messages: true,
       },
     });
   }

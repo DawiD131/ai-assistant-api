@@ -1,0 +1,6 @@
+### Get
+GET {{domain}}/conversation/23cecadf-1d98-48fc-a375-f21f237cb821
+
+### Get all for user
+GET {{domain}}/conversation
+

@@ -19,13 +19,14 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(uuid())
-  email        String        @unique
-  firstName    String
-  lastName     String
-  password     String
-  refreshToken String?
-  settings     UserSettings?
+  id            String         @id @default(uuid())
+  email         String         @unique
+  firstName     String
+  lastName      String
+  password      String
+  refreshToken  String?
+  settings      UserSettings?
+  conversations Conversation[]
 }
 
 model UserSettings {
@@ -40,6 +41,8 @@ model Conversation {
   name      String?
   messages  Message[]
   createdAt DateTime  @default(now())
+  User      User      @relation(fields: [userId], references: [id])
+  userId    String
 }
 
 model Message {

@@ -15,8 +15,8 @@ export class EntryService {
     private eventEmitter: EventEmitter2,
   ) {}
 
-  async handleEntryQuery(query: EntryQueryDto, apiKey: string) {
-    await this.initializeConversation(query);
+  async handleEntryQuery(query: EntryQueryDto, apiKey: string, userId: string) {
+    await this.initializeConversation(query, userId);
 
     const { content } = await this.recognizeIntention(query, apiKey);
 
@@ -41,12 +41,15 @@ export class EntryService {
     });
   }
 
-  private async initializeConversation(query: EntryQueryDto) {
+  private async initializeConversation(query: EntryQueryDto, userId: string) {
     if (!query.conversationId) {
-      const { id } = await this.conversationRepository.upsert({
-        id: query.conversationId,
-        name: null,
-      });
+      const { id } = await this.conversationRepository.upsert(
+        {
+          id: query.conversationId,
+          name: null,
+        },
+        userId,
+      );
 
       query.conversationId = id;
     }

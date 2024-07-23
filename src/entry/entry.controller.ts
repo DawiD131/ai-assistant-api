@@ -32,6 +32,6 @@ export class EntryController {
       res.end();
     });
 
-    await this.entryService.handleEntryQuery(query, user.openAiApiKey);
+    await this.entryService.handleEntryQuery(query, user.openAiApiKey, user.id);
   }
 }
