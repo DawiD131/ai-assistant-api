@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
-      origin: process.env.ORIGIN,
+      origin: 'https://luaai.byst.re',
       credentials: true,
     },
   });
