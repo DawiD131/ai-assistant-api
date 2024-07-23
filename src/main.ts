@@ -6,7 +6,13 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      origin: process.env.ORIGIN,
+      credentials: true,
+    },
+  });
+
   app.use(cookieParser());
   const prismaService = app.get(PrismaService);
   const cacheManager = app.get<Cache>(CACHE_MANAGER);

@@ -29,6 +29,7 @@ jobs:
           JWT_REFRESH_EXPIRES_IN: ${{ secrets.JWT_REFRESH_EXPIRES_IN }}
           JWT_REFRESH_SECRET: ${{ secrets.JWT_REFRESH_SECRET }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          ORIGIN: ${{ secrets.ORIGIN }}
         run: |
           npx pnpm run build
 
@@ -47,5 +48,6 @@ jobs:
           JWT_REFRESH_EXPIRES_IN: ${{ secrets.JWT_REFRESH_EXPIRES_IN }}
           JWT_REFRESH_SECRET: ${{ secrets.JWT_REFRESH_SECRET }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          ORIGIN: ${{ secrets.ORIGIN }}
         run: npx pnpm run start:prod
 

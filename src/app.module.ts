@@ -8,6 +8,7 @@ import { OpenaiService } from './open-ai/openai.service';
 import { ConversationModule } from './conversation/conversation.module';
 import { ActionProcessorModule } from './action-processor/action-processor.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { QueryProcessorModule } from './query-processor/query-processor.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     CacheModule.register(),
     ConversationModule,
     ActionProcessorModule,
+    QueryProcessorModule,
   ],
   providers: [OpenaiService],
 })
