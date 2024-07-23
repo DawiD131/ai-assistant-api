@@ -6,11 +6,11 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    cors: {
-      origin: 'https://luaai.byst.re',
-      credentials: true,
-    },
+  const app = await NestFactory.create(AppModule);
+
+  app.enableCors({
+    origin: 'https://luaai.byst.re/',
+    credentials: true,
   });
 
   app.use(cookieParser());
