@@ -8,15 +8,16 @@ import { ConfigService } from '@nestjs/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  const configService = app.get(ConfigService);
+
   app.enableCors({
-    origin: 'https://luaai.byst.re',
+    origin: configService.get('FRONTEND_ORIGIN'),
     credentials: true,
   });
 
   app.use(cookieParser());
   const prismaService = app.get(PrismaService);
   const cacheManager = app.get<Cache>(CACHE_MANAGER);
-  const configService = app.get(ConfigService);
 
   app.use((req, res, next) => {
     req.prisma = prismaService;

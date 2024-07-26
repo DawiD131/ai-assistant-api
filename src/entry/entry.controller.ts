@@ -28,6 +28,7 @@ export class EntryController {
 
       res.json({
         answer: data[0],
+        conversationId: query.conversationId,
       });
       res.end();
     });
