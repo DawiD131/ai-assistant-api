@@ -49,7 +49,7 @@ model Message {
   id             String        @id @default(uuid())
   role           MessageRole
   content        String
-  conversation   Conversation? @relation(fields: [conversationId], references: [id])
+  conversation   Conversation? @relation(fields: [conversationId], references: [id], onDelete: Cascade)
   createdAt      DateTime      @default(now())
   conversationId String
 }

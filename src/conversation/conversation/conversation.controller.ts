@@ -1,4 +1,4 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, Param, UseGuards } from '@nestjs/common';
 import { ConversationRepository } from './conversation.repository';
 import { GetUser } from '../../decorators/get-user.decorator';
 import { User } from '@prisma/client';
@@ -20,5 +20,11 @@ export class ConversationController {
   @UseGuards(JwtAuthGuard)
   async getById(@Param('id') id: string) {
     return await this.conversationRepository.getById(id);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  async delete(@Param('id') id: string) {
+    return await this.conversationRepository.delete(id);
   }
 }
