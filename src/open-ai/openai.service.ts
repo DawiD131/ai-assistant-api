@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { OpenAI } from 'openai';
 
 interface ChatCompletionParams {
@@ -23,6 +23,17 @@ export class OpenaiService {
     });
 
     return completion.choices[0].message;
+  }
+
+  async validateToken(apiKey: string) {
+    try {
+      await this.getInstance(apiKey).models.list();
+    } catch {
+      throw new HttpException(
+        'Invalid openai api token',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
   }
 
   private getInstance(apiKey: string) {
