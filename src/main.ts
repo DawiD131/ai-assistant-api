@@ -12,7 +12,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   app.enableCors({
-    origin: configService.get('FRONTEND_ORIGIN'),
+    origin: 'https://luaai.byst.re',
     credentials: true,
   });
 
