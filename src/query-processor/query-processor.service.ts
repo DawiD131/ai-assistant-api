@@ -12,7 +12,7 @@ export class QueryProcessorService {
   @OnEvent('entry.query')
   async selectTool(payload: any) {
     const { content } = await this.openAiService.createCompletion({
-      apiKey: payload.apiKey,
+      apiKey: payload.settings.openAiApiKey,
       messages: [{ role: 'user', content: payload.query.content }],
       model: 'gpt-4o',
     });

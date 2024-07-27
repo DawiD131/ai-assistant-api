@@ -38,6 +38,6 @@ export const GetUserSettings = createParamDecorator(
       });
       await cache.set(cacheKey, settings, 0);
     }
-    return { ...user, openAiApiKey: decrypt(settings.openAiApiKey) };
+    return { ...settings, openAiApiKey: decrypt(settings.openAiApiKey) };
   },
 );

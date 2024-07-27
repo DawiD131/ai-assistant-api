@@ -15,15 +15,18 @@ export class EntryService {
     private eventEmitter: EventEmitter2,
   ) {}
 
-  async handleEntryQuery(query: EntryQueryDto, apiKey: string, userId: string) {
+  async handleEntryQuery(query: EntryQueryDto, settings: any, userId: string) {
     await this.initializeConversation(query, userId);
 
-    const { content } = await this.recognizeIntention(query, apiKey);
+    const { content } = await this.recognizeIntention(
+      query,
+      settings.openAiApiKey,
+    );
 
     if (content === 'action') {
-      this.eventEmitter.emit('entry.action', { query, apiKey });
+      this.eventEmitter.emit('entry.action', { query, settings });
     } else {
-      this.eventEmitter.emit('entry.query', { query, apiKey });
+      this.eventEmitter.emit('entry.query', { query, settings });
     }
   }
 

@@ -13,8 +13,12 @@ export class ActionProcessorService {
 
   @OnEvent('entry.action')
   async selectTool(payload: any) {
+    const todoApi = new ToolsApi({
+      todoWebhook: payload.settings.todoListWebhook,
+    });
+
     const resp = await this.openAiService.createCompletion({
-      apiKey: payload.apiKey,
+      apiKey: payload.settings.openAiApiKey,
       messages: [{ role: 'user', content: payload.query.content }],
       tools: toolsSchema,
       model: 'gpt-4o',
@@ -22,10 +26,10 @@ export class ActionProcessorService {
 
     const fn = resp.tool_calls[0].function;
 
-    await ToolsApi.saveTodo(JSON.parse(fn.arguments) as any);
+    await todoApi.saveTodo(JSON.parse(fn.arguments) as any);
 
     const resp2 = await this.openAiService.createCompletion({
-      apiKey: payload.apiKey,
+      apiKey: payload.settings.openAiApiKey,
       messages: [
         {
           role: 'system',

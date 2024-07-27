@@ -1,5 +1,11 @@
 export class ToolsApi {
-  static async saveTodo({ name, tasks }: { name: string; tasks: string[] }) {
+  private readonly todoWebhook: string;
+
+  constructor({ todoWebhook }: { todoWebhook: string }) {
+    this.todoWebhook = todoWebhook;
+  }
+
+  async saveTodo({ name, tasks }: { name: string; tasks: string[] }) {
     const payload = {
       pageTitle: name,
       children: tasks.map((it) => ({
@@ -21,7 +27,7 @@ export class ToolsApi {
       })),
     };
 
-    await fetch('https://hook.eu2.make.com/whftzjfn37mh5qph7afbxdaj3xkhdup9', {
+    await fetch(this.todoWebhook, {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {

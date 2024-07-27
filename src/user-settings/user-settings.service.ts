@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../services/prisma.service';
-import { SaveSettingsDto } from './dto/save-settings.dto';
+import { SettingsDto } from './dto/settings.dto';
 import { createCipheriv } from 'crypto';
 import { ConfigService } from '@nestjs/config';
 
@@ -11,7 +11,7 @@ export class UserSettingsService {
     private readonly configService: ConfigService,
   ) {}
 
-  async setSettings(settings: SaveSettingsDto, userId: string) {
+  async setSettings(settings: SettingsDto, userId: string) {
     await this.prismaService.userSettings.upsert({
       where: {
         userId: userId,
@@ -24,7 +24,15 @@ export class UserSettingsService {
     });
   }
 
-  private encryptObjectValues(object: unknown): { [p: string]: string } {
+  async getUserSettings(userId: string) {
+    return this.prismaService.userSettings.findUnique({
+      where: {
+        userId: userId,
+      },
+    });
+  }
+
+  private encryptObjectValues(object: any): { [p: string]: string } {
     const encrypt = (value: string) => {
       const cipher = createCipheriv(
         'aes-256-cbc',
@@ -36,8 +44,13 @@ export class UserSettingsService {
       return encrypted;
     };
 
-    return Object.fromEntries(
-      Object.entries(object).map(([key, value]) => [key, encrypt(value)]),
-    );
+    if (object.openAiApiKey) {
+      return {
+        ...object,
+        openAiApiKey: encrypt(object.openAiApiKey),
+      };
+    }
+
+    return object;
   }
 }

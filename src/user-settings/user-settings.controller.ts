@@ -1,6 +1,6 @@
-import { Body, Controller, Inject, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Put, UseGuards } from '@nestjs/common';
 import { UserSettingsService } from './user-settings.service';
-import { SaveSettingsDto } from './dto/save-settings.dto';
+import { SettingsDto } from './dto/settings.dto';
 import { GetUser } from '../decorators/get-user.decorator';
 import { User } from '@prisma/client';
 import { JwtAuthGuard } from '../auth/auth/jwt.guard';
@@ -16,10 +16,18 @@ export class UserSettingsController {
 
   @Put()
   @UseGuards(JwtAuthGuard)
-  async saveSettings(@Body() body: SaveSettingsDto, @GetUser() user: User) {
+  async saveSettings(@Body() body: SettingsDto, @GetUser() user: User) {
     const { id } = user;
 
     await this.cacheManager.del(`user-settings-${id}`);
     await this.userSettingsService.setSettings(body, id);
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  async retrieveSettings(@GetUser() user: User) {
+    const settings = await this.userSettingsService.getUserSettings(user.id);
+
+    return SettingsDto.createFrom(settings);
   }
 }
